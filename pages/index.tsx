@@ -1,6 +1,9 @@
+import { ReactElement } from 'react'
+import { NextPageWithLayout } from './_app'
+import Layout from '@/components/Layout'
 import Title from '@/components/Title'
 
-export default function index() {
+const Page: NextPageWithLayout = () => {
   return (
     <>
       <Title title="Home" />
@@ -8,3 +11,9 @@ export default function index() {
     </>
   )
 }
+
+Page.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>
+}
+
+export default Page
