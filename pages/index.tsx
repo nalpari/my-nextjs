@@ -6,8 +6,10 @@ import Title from '@/components/Title'
 const Page: NextPageWithLayout = () => {
   return (
     <>
-      <Title title="Home" />
-      <div>test</div>
+      <div className="m-4">
+        <Title title="Home" />
+        <div>test</div>
+      </div>
     </>
   )
 }

@@ -19,26 +19,26 @@ export default function Navbar() {
             >
               CKEditor5
             </Link>
-            <a
+            <Link
               href="#responsive-header"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-white mr-4"
             >
               Examples1
-            </a>
-            <a
+            </Link>
+            <Link
               href="#responsive-header"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-white"
             >
               Example2
-            </a>
+            </Link>
           </div>
           <div>
-            <a
+            <Link
               href="#"
               className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
             >
               Download
-            </a>
+            </Link>
           </div>
         </div>
       </nav>
