@@ -14,19 +14,19 @@ export default function Navbar() {
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-sm lg:flex-grow">
             <Link
-              href="/ckeditor5"
+              href="#"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-white mr-4"
             >
               CKEditor5
             </Link>
             <Link
-              href="#responsive-header"
+              href="#"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-white mr-4"
             >
               Examples1
             </Link>
             <Link
-              href="#responsive-header"
+              href="#"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-white"
             >
               Example2
