@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react'
 import { NextPageWithLayout } from '../_app'
 import Layout from '@/components/Layout'
+import CkeditorHeader from '@/components/CkeditorHeader'
 
 const Basic: NextPageWithLayout = () => {
   return (
@@ -11,7 +12,12 @@ const Basic: NextPageWithLayout = () => {
 }
 
 Basic.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>
+  return (
+    <Layout>
+      <CkeditorHeader />
+      {page}
+    </Layout>
+  )
 }
 
 export default Basic
