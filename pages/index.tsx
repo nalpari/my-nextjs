@@ -1,5 +1,5 @@
-import { ReactElement } from 'react'
-import { NextPageWithLayout } from './_app'
+import type { ReactElement } from 'react'
+import type { NextPageWithLayout } from './_app'
 import Layout from '@/components/Layout'
 import Title from '@/components/Title'
 
