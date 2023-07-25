@@ -21,6 +21,42 @@ const Page: NextPageWithLayout = () => {
       })
   }, [])
 
+  const handleAddUser = async () => {
+    const data = {
+      email: 'ariadne@prisma.io',
+      name: 'Ariadne',
+      posts: {
+        create: [
+          {
+            title: 'My first day at Prisma',
+            categories: {
+              create: {
+                name: 'Office',
+              },
+            },
+          },
+          {
+            title: 'How to connect to a SQLite database',
+            categories: {
+              create: [{ name: 'Databases' }, { name: 'Tutorials' }],
+            },
+          },
+        ],
+      },
+    }
+
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }
+
+    await fetch('/api/add-user', options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data : ', data)
+      })
+  }
+
   return (
     <>
       <div className="m-4">
@@ -33,6 +69,12 @@ const Page: NextPageWithLayout = () => {
               <span className="pl-2">{item.created_at}</span>
             </div>
           ))}
+        <button
+          onClick={handleAddUser}
+          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        >
+          Add User
+        </button>
       </div>
     </>
   )
