@@ -17,7 +17,7 @@ export default function Navbar() {
               href="#"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-white mr-4"
             >
-              CKEditor5
+              Editor
             </Link>
             <Link
               href="#"
