@@ -8,19 +8,18 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const { email, name, posts } =
+    const { name } =
       typeof req.body === 'string' ? JSON.parse(req.body) : req.body
 
     try {
       console.log(req.body)
-      const user = await prisma.user.create({
+      const category = await prisma.category.create({
         data: {
-          email,
           name,
-          posts,
         },
       })
-      res.status(200).json(user)
+
+      res.status(200).json(category)
     } catch (error) {
       res.status(500).json(error)
     }

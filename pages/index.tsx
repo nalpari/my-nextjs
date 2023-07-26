@@ -9,8 +9,37 @@ type Product = {
   created_at: string
 }
 
+type Category = {
+  id: number
+  name: string
+}
+
+type Profile = {
+  id: number
+  bio: string
+}
+
+type Post = {
+  id: number
+  createAt: string
+  updatedAt: string
+  title: string
+  published: boolean
+  authorId: number
+  categories: Category[]
+}
+
+type User = {
+  id: number
+  email: string
+  name: string
+  posts: Post[]
+  profile: Profile
+}
+
 const Page: NextPageWithLayout = () => {
   const [products, setProducts] = useState<Product[]>([])
+  const [user, setUser] = useState<User>()
 
   useEffect(() => {
     fetch('/api/get-products')
@@ -57,6 +86,68 @@ const Page: NextPageWithLayout = () => {
       })
   }
 
+  const handleAddCategory = async () => {
+    const data = {
+      name: 'Office',
+    }
+
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }
+
+    await fetch('/api/add-category', options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data : ', data)
+      })
+  }
+
+  const handleGetUser = async () => {
+    await fetch('/api/get-user?id=2')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data : ', data)
+        setUser(data)
+      })
+  }
+
+  const handleAddUser2 = async () => {
+    const data = {
+      email: 'yoo32767@gmail.com',
+      name: 'yoo',
+    }
+
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }
+
+    await fetch('/api/add-user2', options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data : ', data)
+      })
+  }
+
+  const handleAddProfile = async () => {
+    const data = {
+      bio: 'F',
+      userId: 2,
+    }
+
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }
+
+    await fetch('/api/add-profile', options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data : ', data)
+      })
+  }
+
   return (
     <>
       <div className="m-4">
@@ -75,6 +166,37 @@ const Page: NextPageWithLayout = () => {
         >
           Add User
         </button>
+        <button
+          onClick={handleAddCategory}
+          className="ml-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        >
+          Add Category
+        </button>
+        <button
+          onClick={handleGetUser}
+          className="ml-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        >
+          Get User
+        </button>
+        {user && (
+          <div>
+            {user.name} <span>{user.profile.bio}</span>
+          </div>
+        )}
+        <div className="mt-2">
+          <button
+            onClick={handleAddUser2}
+            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          >
+            Add User2
+          </button>
+          <button
+            onClick={handleAddProfile}
+            className="ml-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          >
+            Add Profile
+          </button>
+        </div>
       </div>
     </>
   )

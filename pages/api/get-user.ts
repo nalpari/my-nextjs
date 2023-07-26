@@ -7,17 +7,21 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method === 'POST') {
-    const { email, name, posts } =
-      typeof req.body === 'string' ? JSON.parse(req.body) : req.body
+  if (req.method === 'GET') {
+    const { id } = req.query
 
     try {
-      console.log(req.body)
-      const user = await prisma.user.create({
-        data: {
-          email,
-          name,
-          posts,
+      const user = await prisma.user.findUnique({
+        where: {
+          id: Number(id),
+        },
+        include: {
+          profile: true,
+          posts: {
+            include: {
+              categories: true,
+            },
+          },
         },
       })
       res.status(200).json(user)

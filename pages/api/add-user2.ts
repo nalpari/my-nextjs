@@ -8,7 +8,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const { email, name, posts } =
+    const { email, name } =
       typeof req.body === 'string' ? JSON.parse(req.body) : req.body
 
     try {
@@ -17,10 +17,9 @@ export default async function handler(
         data: {
           email,
           name,
-          posts,
         },
       })
-      res.status(200).json(user)
+      res.status(201).json(user)
     } catch (error) {
       res.status(500).json(error)
     }
