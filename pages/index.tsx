@@ -26,6 +26,7 @@ type Post = {
   title: string
   published: boolean
   authorId: number
+  author: User
   categories: Category[]
 }
 
@@ -40,6 +41,7 @@ type User = {
 const Page: NextPageWithLayout = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [user, setUser] = useState<User>()
+  const [posts, setPosts] = useState<Post[]>([])
 
   useEffect(() => {
     fetch('/api/get-products')
@@ -148,6 +150,38 @@ const Page: NextPageWithLayout = () => {
       })
   }
 
+  const handleAddPost = async () => {
+    const data = {
+      title: 'My first day at Prisma',
+      authorId: 2,
+      categories: {
+        create: {
+          name: 'Office',
+        },
+      },
+    }
+
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }
+
+    await fetch('/api/add-post', options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data : ', data)
+      })
+  }
+
+  const handleGetPosts = async () => {
+    await fetch('/api/get-posts')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data : ', data)
+        setPosts(data)
+      })
+  }
+
   return (
     <>
       <div className="m-4">
@@ -195,6 +229,20 @@ const Page: NextPageWithLayout = () => {
             className="ml-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
           >
             Add Profile
+          </button>
+        </div>
+        <div className="mt-2">
+          <button
+            onClick={handleAddPost}
+            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          >
+            Add Post
+          </button>
+          <button
+            onClick={handleGetPosts}
+            className="ml-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          >
+            Get Posts
           </button>
         </div>
       </div>
