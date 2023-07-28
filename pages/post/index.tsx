@@ -1,8 +1,10 @@
 import { ReactElement, useEffect, useState } from 'react'
 import { NextPageWithLayout } from '../_app'
+import { useRouter } from 'next/router'
 import Layout from '@/components/Layout'
 import Title from '@/components/Title'
 import dayjs from 'dayjs'
+import Link from 'next/link'
 
 type Category = {
   id: number
@@ -34,6 +36,7 @@ type User = {
 }
 
 const List: NextPageWithLayout = () => {
+  const router = useRouter()
   const [posts, setPosts] = useState<Post[]>([])
 
   useEffect(() => {
@@ -65,7 +68,9 @@ const List: NextPageWithLayout = () => {
                 posts.map((post, index) => (
                   <tr key={post.id}>
                     <th>{index + 1}</th>
-                    <td>{post.title}</td>
+                    <td>
+                      <Link href={`/post/${post.id}`}>{post.title}</Link>
+                    </td>
                     <td>{post.author.name}</td>
                     <td>
                       {post.categories?.map((item) => (
@@ -83,7 +88,12 @@ const List: NextPageWithLayout = () => {
           </table>
         </div>
         <div className="flex flex-row-reverse py-4">
-          <button className="btn btn-primary">Add Post</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => router.push('/post/create')}
+          >
+            Add Post
+          </button>
         </div>
       </div>
     </>

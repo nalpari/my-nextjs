@@ -152,13 +152,13 @@ const Page: NextPageWithLayout = () => {
 
   const handleAddPost = async () => {
     const data = {
-      title: 'My first day at Prisma',
+      title: 'nextjs create data1',
       authorId: 2,
-      categories: {
-        create: {
-          name: 'Office',
-        },
-      },
+      // categories: {
+      //   create: {
+      //     name: 'Office',
+      //   },
+      // },
     }
 
     const options = {
