@@ -7,6 +7,7 @@ import axios from 'axios'
 import type { NextPageWithLayout } from './_app'
 import Layout from '@/components/Layout'
 import Title from '@/components/Title'
+import Link from 'next/link'
 
 type Product = {
   id: string
@@ -78,11 +79,18 @@ const Page: NextPageWithLayout = ({
     //     console.log('data : ', data)
     //     setProducts(data.products)
     //   })
+    // axios.get('/api/get-products').then((res) => {
+    //   console.log('res : ', res)
+    //   setProducts(res.data.products)
+    // })
+  }, [])
+
+  const handleGetProducts = async () => {
     axios.get('/api/get-products').then((res) => {
       console.log('res : ', res)
       setProducts(res.data.products)
     })
-  }, [])
+  }
 
   const handleAddProduct = async () => {
     const data = {
@@ -279,6 +287,14 @@ const Page: NextPageWithLayout = ({
       <div className="m-4">
         <Title title="Home" />
         <div className="my-2">
+          <Link
+            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            href="/test"
+          >
+            Go Test
+          </Link>
+        </div>
+        <div className="my-2">
           {products &&
             products.map((item) => (
               <div key={item.id}>
@@ -289,8 +305,14 @@ const Page: NextPageWithLayout = ({
         </div>
         <div className="my-2">
           <button
+            onClick={handleGetProducts}
+            className="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          >
+            Get Products
+          </button>
+          <button
             onClick={handleAddProduct}
-            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            className="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
           >
             Add Product
           </button>
