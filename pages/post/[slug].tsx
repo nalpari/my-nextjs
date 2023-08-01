@@ -1,9 +1,12 @@
 import { ReactElement, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import Layout from '@/components/Layout'
-import { NextPageWithLayout } from '@/pages//_app'
-import Title from '@/components/Title'
+
 import dayjs from 'dayjs'
+
+import { NextPageWithLayout } from '@/pages/_app'
+import Layout from '@/components/Layout'
+import Title from '@/components/Title'
+import axios from 'axios'
 
 type Category = {
   id: number
@@ -40,14 +43,22 @@ const PostId: NextPageWithLayout = () => {
   const router = useRouter()
   const { slug } = router.query
 
+  const getPost = async () => {
+    const result = await axios.get(`/api/get-post?id=${slug}`)
+    console.log('result : ', result)
+    setPost(result.data)
+    setPostTitle(result.data.title)
+  }
+
   useEffect(() => {
-    fetch(`/api/get-post?id=${slug}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-        setPost(data)
-        setPostTitle(data.title)
-      })
+    getPost()
+    // fetch(`/api/get-post?id=${slug}`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //     setPost(data)
+    //     setPostTitle(data.title)
+    //   })
   }, [])
 
   const handleModifyPost = async () => {

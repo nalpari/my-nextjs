@@ -1,10 +1,13 @@
 import { ReactElement, useEffect, useState } from 'react'
-import { NextPageWithLayout } from '../_app'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
+
+import dayjs from 'dayjs'
+import axios from 'axios'
+
+import { NextPageWithLayout } from '../_app'
 import Layout from '@/components/Layout'
 import Title from '@/components/Title'
-import dayjs from 'dayjs'
-import Link from 'next/link'
 
 type Category = {
   id: number
@@ -39,13 +42,20 @@ const List: NextPageWithLayout = () => {
   const router = useRouter()
   const [posts, setPosts] = useState<Post[]>([])
 
+  const getPosts = async () => {
+    const result = await axios.get('/api/get-posts')
+    console.log('result : ', result)
+    setPosts(result.data)
+  }
+
   useEffect(() => {
-    fetch('/api/get-posts')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-        setPosts(data)
-      })
+    getPosts()
+    // fetch('/api/get-posts')
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //     setPosts(data)
+    //   })
   }, [])
 
   return (
