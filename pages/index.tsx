@@ -4,6 +4,7 @@ import type { NextPageWithLayout } from './_app'
 import Layout from '@/components/Layout'
 import Title from '@/components/Title'
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import axios from 'axios'
 
 type Product = {
   id: string
@@ -69,32 +70,40 @@ const Page: NextPageWithLayout = ({
   const [posts, setPosts] = useState<Post[]>([])
 
   useEffect(() => {
-    fetch('/api/get-products')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-        setProducts(data.products)
-      })
+    // fetch('/api/get-products')
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //     setProducts(data.products)
+    //   })
+    axios.get('/api/get-products').then((res) => {
+      console.log('res : ', res)
+      setProducts(res.data.products)
+    })
   }, [])
 
   const handleAddProduct = async () => {
     const data = {
-      name: 'Product 2',
+      name: 'Product 4',
       imageUrl: 'https://picsum.photos/200',
-      categoryId: 2,
+      categoryId: 1,
     }
 
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }
+    const result = await axios.post('/api/add-product', data)
+    console.log('result : ', result)
+    setProducts([...products, result.data])
 
-    await fetch('/api/add-product', options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-        setProducts([...products, data])
-      })
+    // const options = {
+    //   method: 'POST',
+    //   body: JSON.stringify(data),
+    // }
+
+    // await fetch('/api/add-product', options)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //     setProducts([...products, data])
+    //   })
   }
 
   const handleAddUser = async () => {
@@ -121,16 +130,19 @@ const Page: NextPageWithLayout = ({
       },
     }
 
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }
+    const result = await axios.post('/api/add-user', data)
+    console.log('result : ', result)
 
-    await fetch('/api/add-user', options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-      })
+    // const options = {
+    //   method: 'POST',
+    //   body: JSON.stringify(data),
+    // }
+
+    // await fetch('/api/add-user', options)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //   })
   }
 
   const handleAddCategory = async () => {
@@ -138,25 +150,30 @@ const Page: NextPageWithLayout = ({
       name: 'Office',
     }
 
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }
+    const result = await axios.post('/api/add-category', data)
+    console.log('result : ', result)
+    // const options = {
+    //   method: 'POST',
+    //   body: JSON.stringify(data),
+    // }
 
-    await fetch('/api/add-category', options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-      })
+    // await fetch('/api/add-category', options)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //   })
   }
 
   const handleGetUser = async () => {
-    await fetch('/api/get-user?id=2')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-        setUser(data)
-      })
+    const result = await axios.get('/api/get-user?id=2')
+    console.log('result : ', result)
+    setUser(result.data)
+    // await fetch('/api/get-user?id=2')
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //     setUser(data)
+    //   })
   }
 
   const handleAddUser2 = async () => {
@@ -165,16 +182,19 @@ const Page: NextPageWithLayout = ({
       name: 'yoo',
     }
 
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }
+    const result = await axios.post('/api/add-user2', data)
+    console.log('result : ', result)
 
-    await fetch('/api/add-user2', options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-      })
+    // const options = {
+    //   method: 'POST',
+    //   body: JSON.stringify(data),
+    // }
+
+    // await fetch('/api/add-user2', options)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //   })
   }
 
   const handleAddProfile = async () => {
@@ -183,48 +203,50 @@ const Page: NextPageWithLayout = ({
       userId: 2,
     }
 
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }
+    const result = await axios.post('/api/add-profile', data)
+    console.log('result : ', result)
+    // const options = {
+    //   method: 'POST',
+    //   body: JSON.stringify(data),
+    // }
 
-    await fetch('/api/add-profile', options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-      })
+    // await fetch('/api/add-profile', options)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //   })
   }
 
   const handleAddPost = async () => {
     const data = {
       title: 'nextjs create data1',
       authorId: 2,
-      // categories: {
-      //   create: {
-      //     name: 'Office',
-      //   },
-      // },
     }
 
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }
+    const result = await axios.post('/api/add-post', data)
+    console.log('result : ', result)
+    // const options = {
+    //   method: 'POST',
+    //   body: JSON.stringify(data),
+    // }
 
-    await fetch('/api/add-post', options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-      })
+    // await fetch('/api/add-post', options)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //   })
   }
 
   const handleGetPosts = async () => {
-    await fetch('/api/get-posts')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data : ', data)
-        setPosts(data)
-      })
+    const result = await axios.get('/api/get-posts')
+    console.log('result : ', result)
+    setPosts(result.data)
+    // await fetch('/api/get-posts')
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data : ', data)
+    //     setPosts(data)
+    //   })
   }
 
   const PostBtnComponent = () => {
