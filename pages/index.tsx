@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import type { ReactElement } from 'react'
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+
+import axios from 'axios'
+
 import type { NextPageWithLayout } from './_app'
 import Layout from '@/components/Layout'
 import Title from '@/components/Title'
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import axios from 'axios'
 
 type Product = {
   id: string

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+
 import { BsFillJournalBookmarkFill } from 'react-icons/bs'
 
 export default function Navbar() {
