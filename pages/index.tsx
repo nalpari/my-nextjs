@@ -1,7 +1,9 @@
-import { useEffect, type ReactElement, useState } from 'react'
+import { useEffect, useState } from 'react'
+import type { ReactElement } from 'react'
 import type { NextPageWithLayout } from './_app'
 import Layout from '@/components/Layout'
 import Title from '@/components/Title'
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
 type Product = {
   id: string
@@ -38,7 +40,30 @@ type User = {
   profile: Profile
 }
 
-const Page: NextPageWithLayout = () => {
+/**
+ * getServerSideProps
+ * @returns
+ */
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      create: true,
+      select: true,
+      modify: false,
+      delete: false,
+    },
+  }
+}
+
+/**
+ * Page
+ * @param param0
+ * @returns
+ */
+const Page: NextPageWithLayout = ({
+  create,
+  select,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [products, setProducts] = useState<Product[]>([])
   const [user, setUser] = useState<User>()
   const [posts, setPosts] = useState<Post[]>([])
@@ -51,6 +76,26 @@ const Page: NextPageWithLayout = () => {
         setProducts(data.products)
       })
   }, [])
+
+  const handleAddProduct = async () => {
+    const data = {
+      name: 'Product 2',
+      imageUrl: 'https://picsum.photos/200',
+      categoryId: 2,
+    }
+
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }
+
+    await fetch('/api/add-product', options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data : ', data)
+        setProducts([...products, data])
+      })
+  }
 
   const handleAddUser = async () => {
     const data = {
@@ -182,18 +227,50 @@ const Page: NextPageWithLayout = () => {
       })
   }
 
+  const PostBtnComponent = () => {
+    return (
+      <>
+        {create && (
+          <button
+            onClick={handleAddPost}
+            className="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          >
+            Add Post
+          </button>
+        )}
+        {select && (
+          <button
+            onClick={handleGetPosts}
+            className="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          >
+            Get Posts
+          </button>
+        )}
+      </>
+    )
+  }
+
   return (
     <>
       <div className="m-4">
         <Title title="Home" />
-        <div>test</div>
-        {products &&
-          products.map((item) => (
-            <div key={item.id}>
-              {item.name}
-              <span className="pl-2">{item.created_at}</span>
-            </div>
-          ))}
+        <div className="my-2">
+          {products &&
+            products.map((item) => (
+              <div key={item.id}>
+                {item.name}
+                <span className="pl-2">{item.created_at}</span>
+              </div>
+            ))}
+        </div>
+        <div className="my-2">
+          <button
+            onClick={handleAddProduct}
+            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          >
+            Add Product
+          </button>
+        </div>
         <button
           onClick={handleAddUser}
           className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
@@ -232,18 +309,7 @@ const Page: NextPageWithLayout = () => {
           </button>
         </div>
         <div className="mt-2">
-          <button
-            onClick={handleAddPost}
-            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-          >
-            Add Post
-          </button>
-          <button
-            onClick={handleGetPosts}
-            className="ml-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-          >
-            Get Posts
-          </button>
+          <PostBtnComponent />
         </div>
       </div>
     </>

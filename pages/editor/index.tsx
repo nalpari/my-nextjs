@@ -3,7 +3,11 @@ import QuillEditor from '@/components/QuillEditor'
 import { ReactElement } from 'react'
 
 export default function Editor() {
-  const onChange = (content: string) => {
+  // const onChange = (content: string) => {
+  //   console.log(content)
+  // }
+
+  const onChange: (content: string) => void = (content) => {
     console.log(content)
   }
 
