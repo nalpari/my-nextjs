@@ -10,6 +10,7 @@ export default async function handler(
   if (req.method === 'GET') {
     try {
       const posts = await prisma.post.findMany({
+        orderBy: [{ id: 'desc' }],
         include: {
           author: true,
           categories: true,
