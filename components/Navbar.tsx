@@ -21,10 +21,10 @@ export default function Navbar() {
               Post
             </Link>
             <Link
-              href="#"
+              href="/nasa"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-white mr-4"
             >
-              Examples1
+              NASA api apod
             </Link>
             <Link
               href="#"
