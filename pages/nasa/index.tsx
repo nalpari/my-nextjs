@@ -17,24 +17,35 @@ type Repo = {
   url: string
 }
 
-const Nasa: NextPageWithLayout = () => {
-  const [nasaRepo, setNasaRepo] = useState<Repo>()
-
-  const getNasaData = async () => {
-    const result = await axios.get('/api/get-nasa')
-    console.log('result : ', result)
-    setNasaRepo(result.data)
+export const getServerSideProps: GetServerSideProps = async () => {
+  const result = await axios
+    .get(
+      'https://api.nasa.gov/planetary/apod?api_key=b8B6CITeZJhzttzri98034vQFYB7L54fc7ywxQak',
+    )
+    .then((res) => res.data)
+  console.log(result)
+  return {
+    props: {
+      nasaRepo: result,
+    },
   }
+}
 
+function Nasa({ nasaRepo }: Repo) {
   useEffect(() => {
-    getNasaData()
+    console.log(nasaRepo)
   }, [])
 
   return (
     <>
       <div className="m-4">
         <Title title="NASA API" />
-        {/* <Image src={repo.hdurl} alt={repo.title} width={500} height={500} /> */}
+        <Image
+          src={nasaRepo.url}
+          alt={nasaRepo.title}
+          width={500}
+          height={500}
+        />
       </div>
     </>
   )
