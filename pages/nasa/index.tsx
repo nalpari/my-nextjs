@@ -43,9 +43,10 @@ function Nasa({ nasaRepo }: Repo) {
         <Image
           src={nasaRepo.url}
           alt={nasaRepo.title}
-          width={500}
-          height={500}
+          width={960}
+          height={960}
         />
+        <div>{nasaRepo.title}</div>
       </div>
     </>
   )
