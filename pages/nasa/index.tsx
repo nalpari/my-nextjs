@@ -46,7 +46,8 @@ function Nasa({ nasaRepo }: Repo) {
           width={960}
           height={960}
         />
-        <div>{nasaRepo.title}</div>
+        <h1 className="text-4xl m-4">{nasaRepo.title}</h1>
+        <div className="m-4">{nasaRepo.explanation}</div>
       </div>
     </>
   )
