@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
-function Nasa({ nasaRepo }: Repo) {
+function Nasa({ nasaRepo }: { nasaRepo: Repo }) {
   useEffect(() => {
     console.log(nasaRepo)
   }, [])
